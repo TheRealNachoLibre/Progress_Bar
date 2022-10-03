@@ -31,12 +31,38 @@ continuous.addEventListener('click', () => {
     continuousFunction()
 })
 
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }
+
+
+function continuousFunction() {
+    previous.disabled = true
+    next.disabled = true
+    currentActive = 1
+    update()
+    let pass = 0
+    while(pass < 8) {
+        wait(500)
+        currentActive++
+        if(currentActive == 4) {
+            update()
+            currentActive = 0
+        } else {
+            update()
+        }
+        pass++
+    }
+}
 
 function update() {
     circles.forEach((circle, idx) => {
         console.log("update - currentActive: " + currentActive)
         if(idx < currentActive) {
-            console.log(circle + " is active")
             circle.classList.add('active')
         } else {
             circle.classList.remove('active')
@@ -55,21 +81,3 @@ function update() {
         next.disabled = false
     }
 }
-
-/*function continuousFunction() {
-    previous.disabled = true
-    next.disabled = true
-    let initClick = Date.now()
-    let finish = initClick + 20000
-    console.log(initClick + " " + finish)
-    while(initClick <= finish) {
-        initClick = Date.now()
-        if(initClick % 1000 == 0) {
-            currentActive++
-            if(currentActive = 4) {
-
-            }
-        }
-    }
-
-}*/
